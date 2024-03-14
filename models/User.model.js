@@ -18,6 +18,10 @@ const userSchema = new Schema(
       type: String,
       required: [true, "Name is required."],
     },
+    profilePicture:{
+      type:String,
+      default:"./public/default-photo.png",
+    }
   },
   {
     // this second object adds extra properties: `createdAt` and `updatedAt`

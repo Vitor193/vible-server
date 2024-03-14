@@ -10,8 +10,11 @@ const toDoSchema = new Schema(
             type:String,
             required: [true,"topic required"],
         },
+    },
+    {
+        timestamps:true,
     }
-)
+);
 
 const ToDo = model("ToDo", toDoSchema);
 
