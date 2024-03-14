@@ -2,16 +2,13 @@ const {Schema,model}= require('mongoose');
 
 const noteSchema = new Schema(
     {
-        name: {
+        title: {
             type:String,
             required: [true,"name required"],
         },
         tag: {
             type:String,
             required: [true,"tag required"],
-        },
-        updateDate: {
-            type: Date,
         },
         text: {
             type: String,
