@@ -1,24 +1,31 @@
 const router = require("express").Router();
 const mongoose = require("mongoose");
 const Note = require("../models/Note.model");
+const {isAuthenticated} = require("../middleware/jwt.middleware");
 
 
-router.post("/notes",(req,res,next)=>{
-    const {title, tag, text} = req.body;
+router.post("/notes",isAuthenticated,(req,res,next)=>{
+    const {title, tag, text,creator} = req.body;
 
-    Note.create({title,tag,text})
+    Note.create({title,tag,text,creator})
         .then(response=>res.json(response))
         .catch(error=>res.json(error));
 });
 
-router.get("/notes",(req,res,next)=>{
+router.get("/notes",isAuthenticated,(req,res,next)=>{
+    const user = req.payload;
+
     Note.find()
-        .then(allNotes=>res.json(allNotes))
+        .then(allNotes=>{
+            const userNotes = allNotes.filter(note=>note.creator.name=== user.name)
+            return res.json(userNotes)
+        })
         .catch(error=>res.json(error));
 });
 
-router.get("/notes/:noteId",(req,res,next)=>{
+router.get("/notes/:noteId",isAuthenticated,(req,res,next)=>{
     const {noteId} = req.params;
+    const user = req.payload;
 
     if(!mongoose.Types.ObjectId.isValid(noteId)){
         res.status(400).json({message:'Specified Id is not valid.'});
@@ -26,13 +33,17 @@ router.get("/notes/:noteId",(req,res,next)=>{
     }
 
     Note.findById(noteId)
-        .then(note=>res.status(200).json(note))
+        .then(note=>{
+            const userSingleNote = note.filter(singleNote=>singleNote.creator.name===user.name)
+            return res.status(200).json(userSingleNote)
+        })
         .catch(error=>res.json(error));
 
 });
 
-router.put("/notes/:noteId",(req,res,next)=>{
+router.put("/notes/:noteId",isAuthenticated,(req,res,next)=>{
     const {noteId}= req.params;
+    const user = req.payload;
     
     if(!mongoose.Types.ObjectId.isValid(noteId)){
         res.status(400).json({message:'Specified Id is not valid.'});
@@ -40,7 +51,10 @@ router.put("/notes/:noteId",(req,res,next)=>{
     };
 
     Note.findByIdAndUpdate(noteId,req.body,{new:true})
-        .then((updatedNote)=>res.json(updatedNote))
+        .then((updatedNote)=>{
+            const userUpdatedNote = updatedNote.filter(singleUpdatedNote=>singleUpdatedNote.creator.name===user.name)
+            return res.status(200).json(userUpdatedNote)
+        })
         .catch(error=>res.json(error));
 
 });

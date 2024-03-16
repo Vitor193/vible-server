@@ -10,6 +10,9 @@ const toDoSchema = new Schema(
             type:String,
             required: [true,"topic required"],
         },
+        creator: {
+            type: Schema.Types.ObjectId, ref:"User"
+        }
     },
     {
         timestamps:true,

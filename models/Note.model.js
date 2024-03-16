@@ -14,6 +14,9 @@ const noteSchema = new Schema(
             type: String,
             required: [true,"write your text here"],
         },
+        creator: {
+            type: Schema.Types.ObjectId, ref:'User'
+        }
     },
     {
         timestamps: true,

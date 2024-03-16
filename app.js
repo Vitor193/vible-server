@@ -1,4 +1,5 @@
 // ℹ️ Gets access to environment variables/settings
+
 // https://www.npmjs.com/package/dotenv
 require("dotenv").config();
 
@@ -21,8 +22,11 @@ app.use("/api", indexRoutes);
 const authRoutes = require("./routes/auth.routes");
 app.use("/auth", authRoutes);
 
-const noteRouter = require("./routes/notes.routes");
-app.use("/api",noteRouter);
+const noteRoutes = require("./routes/notes.routes");
+app.use("/api",noteRoutes);
+
+//const toDoRoutes = require('./routes/toDo.routes');
+//app.use("/api",toDoRoutes);
 
 // ❗ To handle errors. Routes that don't exist or errors that you handle in specific routes
 require("./error-handling")(app);
