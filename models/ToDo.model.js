@@ -2,7 +2,7 @@ const {Schema, model } = require("mongoose");
 
 const toDoSchema = new Schema(
     {
-        name: {
+        title: {
             type: String,
             required: [true, "name required"],
         },

@@ -59,7 +59,7 @@ router.put("/notes/:noteId",isAuthenticated,(req,res,next)=>{
 
 });
 
-router.delete("/notes/:noteId",(req,res,next)=>{
+router.delete("/notes/:noteId",isAuthenticated,(req,res,next)=>{
     const {noteId} = req.params;
 
     if(!mongoose.Types.ObjectId.isValid(noteId)){
@@ -68,7 +68,7 @@ router.delete("/notes/:noteId",(req,res,next)=>{
     };
 
     Note.findByIdAndDelete(noteId)
-        .then(()=>res.json({message:`the note ${noteId} was removed sucessfully`}))
+        .then(()=>res.json({message:`the note ${noteId} was removed sucessfully.`}))
         .catch(error=>res.json(error));
 
 });
