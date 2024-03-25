@@ -5,7 +5,7 @@ const {isAuthenticated} = require("../middleware/jwt.middleware");
 const User = require("../models/User.model")
 
 
-router.post("/notes",isAuthenticated,(req,res,next)=>{
+router.post("/",isAuthenticated,(req,res,next)=>{
     const {title, tag, text} = req.body;
     const creator = req.payload._id;
 
@@ -14,7 +14,7 @@ router.post("/notes",isAuthenticated,(req,res,next)=>{
         .catch(error=>res.json(error));
 });
 
-router.get("/notes",isAuthenticated,(req,res,next)=>{
+router.get("/",isAuthenticated,(req,res,next)=>{
     const user = req.payload._id;
 
     Note.find({creator:user})
@@ -22,7 +22,7 @@ router.get("/notes",isAuthenticated,(req,res,next)=>{
         .catch(error=>res.json(error));
 });
 
-router.get("/notes/:noteId",isAuthenticated,(req,res,next)=>{
+router.get("/:noteId",isAuthenticated,(req,res,next)=>{
     const {noteId} = req.params;
     const user = req.payload._id;
 
@@ -42,7 +42,7 @@ router.get("/notes/:noteId",isAuthenticated,(req,res,next)=>{
 
 });
 
-router.put("/notes/:noteId",isAuthenticated,(req,res,next)=>{
+router.put("/:noteId",isAuthenticated,(req,res,next)=>{
     const {noteId}= req.params;
     const user = req.payload._id;
     
@@ -62,7 +62,7 @@ router.put("/notes/:noteId",isAuthenticated,(req,res,next)=>{
 
 });
 
-router.delete("/notes/:noteId",isAuthenticated,(req,res,next)=>{
+router.delete("/:noteId",isAuthenticated,(req,res,next)=>{
     const {noteId} = req.params;
 
     if(!mongoose.Types.ObjectId.isValid(noteId)){

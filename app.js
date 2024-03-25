@@ -23,10 +23,10 @@ const authRoutes = require("./routes/auth.routes");
 app.use("/auth", authRoutes);
 
 const noteRoutes = require("./routes/notes.routes");
-app.use("/api",noteRoutes);
+app.use("/notes",noteRoutes);
 
 const toDoRoutes = require('./routes/toDo.routes');
-app.use("/api",toDoRoutes);
+app.use("/todo",toDoRoutes);
 
 // ❗ To handle errors. Routes that don't exist or errors that you handle in specific routes
 require("./error-handling")(app);
