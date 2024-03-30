@@ -4,7 +4,7 @@ const ToDo = require("../models/ToDo.model");
 const {isAuthenticated} = require("../middleware/jwt.middleware");
 
 
-router.post("/",isAuthenticated,(req,res,next)=>{
+router.post("/todo",isAuthenticated,(req,res,next)=>{
     const {title,topic} = req.body;
     const creator = req.payload._id;
 
@@ -14,7 +14,7 @@ router.post("/",isAuthenticated,(req,res,next)=>{
 
 });
 
-router.get("/",isAuthenticated,(req,res,next)=>{
+router.get("/todo",isAuthenticated,(req,res,next)=>{
     const user = req.payload._id;
 
     ToDo.find({creator:user})
@@ -23,7 +23,7 @@ router.get("/",isAuthenticated,(req,res,next)=>{
 });
 
 
-router.get("/:toDoId",isAuthenticated,(req,res,next)=>{
+router.get("/todo/:toDoId",isAuthenticated,(req,res,next)=>{
     const {toDoId} = req.params;
     const user = req.payload._id;
 
@@ -44,7 +44,7 @@ router.get("/:toDoId",isAuthenticated,(req,res,next)=>{
 
 });
 
-router.put("/:toDoId",isAuthenticated,(req,res,next)=>{
+router.put("/todo/:toDoId",isAuthenticated,(req,res,next)=>{
     const {toDoId} = req.params;
     const user = req.payload._id;
 
@@ -64,7 +64,7 @@ router.put("/:toDoId",isAuthenticated,(req,res,next)=>{
 
 });
 
-router.delete("/:toDoId",isAuthenticated,(req,res,next)=>{
+router.delete("/todo/:toDoId",isAuthenticated,(req,res,next)=>{
     const {toDoId} = req.params;
 
     if(!mongoose.Types.ObjectId.isValid(toDoId)){
