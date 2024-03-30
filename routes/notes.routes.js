@@ -18,7 +18,9 @@ router.get("/notes",isAuthenticated,(req,res,next)=>{
     const user = req.payload._id;
 
     Note.find({creator:user})
-        .then(response=>res.json(response))
+        .then(response=>{
+            res.setHeader('Cache-Control', 'no-cache');
+            res.json(response)})
         .catch(error=>res.json(error));
 });
 
